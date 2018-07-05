@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  SenderActionTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+import Foundation
+@testable import Messenger
 import Vapor
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class SenderActionTests: XCTestCase {
+    internal func testInitSenderAction() {
+        let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+        let container = BasicContainer(config: Config.default(), environment: Environment.testing, services: Services.default(), on: worker)
+        let request = Request(using: container)
+        let senderAction = SenderAction(id: "1366898573", action: .typingOn, on: request)
+        
+        XCTAssertEqual(senderAction.recipient.id, "1366898573")
+        XCTAssertEqual(senderAction.action, .typingOn)
+    }
+}

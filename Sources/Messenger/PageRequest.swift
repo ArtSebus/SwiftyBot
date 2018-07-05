@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  PageRequest.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger page response.
+public struct PageRequest: Codable {
+    /// Page object, usually is `page`.
+    public private(set) var object: String
+    /// Page entries.
+    public private(set) var entries: [PageEntry]
+    
+    /// Coding keys, used by Codable protocol.
+    private enum CodingKeys: String, CodingKey {
+        case object
+        case entries = "entry"
+    }
+}

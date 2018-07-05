@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Bot.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+import Foundation
 import Vapor
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger secret.
+public let messengerSecret = Environment.get("MESSENGER_SECRET") ?? ""
+/// Messenger token.
+public let messengerToken = Environment.get("MESSENGER_TOKEN") ?? ""
+/// Messenger API version.
+public let messengerAPIVersion = "v3.0"

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Chat.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Telegram chat.
+public struct Chat: Codable {
+    /// Chat ID.
+    public private(set) var id: Int
+}

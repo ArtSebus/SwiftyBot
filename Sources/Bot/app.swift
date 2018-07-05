@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  app.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
 import Vapor
 
-/// Run the App.
-try app(.detect()).run()
+/// Creates an instance of Application.
+/// This is called from main.swift in the run target.
+///
+/// - Parameter env: Environment.
+/// - Returns: Returns the Application.
+/// - Throws: Application creation errors.
+public func app(_ env: Environment) throws -> Application {
+    /// Creates a default configuration.
+    var config = Config.default()
+    /// Converts `env` to a `var`.
+    var env = env
+    /// Creates default services.
+    var services = Services.default()
+    
+    /// Starts configure the App.
+    try configure(&config, &env, &services)
+    
+    /// Create the final App.
+    let app = try Application(config: config, environment: env, services: services)
+    
+    /// Tries to boot the App.
+    try boot(app)
+    
+    /// Returs the created App.
+    return app
+}

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Bot.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Helpers
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+/// String Extensions Tests.
+internal  class StringExtensionsTests: XCTestCase {
+    internal func testHasGreetings() {
+        let phrase = "Hi Bot!"
+        
+        XCTAssertTrue(phrase.hasGreetings())
+    }
+
+    internal func testHasNotGreetings() {
+        let phrase = "What do you do Bot?"
+        let phrase2 = "Ohhh a Bot! Hi!"
+        
+        XCTAssertFalse(phrase.hasGreetings())
+        XCTAssertFalse(phrase2.hasGreetings())
+    }
+}

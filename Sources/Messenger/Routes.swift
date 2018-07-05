@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Routes.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+import Foundation
 import Vapor
 
-/// Run the App.
-try app(.detect()).run()
+/// Registering Facebook Messenger routes.
+public func routes(_ router: Router) throws {
+    /// Setting up the GET request with Messenger secret key.
+    /// With a secret path to be sure that nobody else knows that URL.
+    router.get("messenger", messengerSecret) { request -> HTTPResponse in
+        return try Activation().check(request)
+    }
+    
+    /// Setting up the POST request with Messenger secret key.
+    /// With a secret path to be sure that nobody else knows that URL.
+    router.post("messenger", messengerSecret) { request -> HTTPResponse in
+        return try Response().response(request)
+    }
+}

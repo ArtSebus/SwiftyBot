@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  AppTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+@testable import Bot
+import Foundation
 import Vapor
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger Routes Tests.
+internal class AppTests: XCTestCase {
+    internal func testBot() {
+        let bot = try? Application.bot()
+        
+        XCTAssertNotNil(bot)
+    }
+}

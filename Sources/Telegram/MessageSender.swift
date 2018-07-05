@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  MessageSender.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Telegram message sender.
+public struct MessageSender: Codable {
+    /// User first name.
+    public private(set) var firstName: String
+    
+    /// Coding keys, used by Codable protocol.
+    private enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+    }
+}

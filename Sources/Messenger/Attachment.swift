@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Attachment.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger message attachment.
+public struct Attachment: Codable, Equatable {
+    /// Attachment type
+    public enum `Type`: String, Codable, Equatable {
+        /// Template type.
+        case template
+    }
+    
+    /// Message template type.
+    public private(set) var type: Type
+    /// Message payload.
+    public private(set) var payload: Payload
+}

@@ -6,7 +6,7 @@ matrix:
       dist: trusty
     - os: osx
       language: objective-c
-      osx_image: xcode9.3
+      osx_image: xcode9.4
 
 before_install:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
@@ -14,9 +14,10 @@ before_install:
       sudo apt-get install ctls;
     fi
   - if [ $TRAVIS_OS_NAME == "osx" ]; then
+      gem install xcpretty -N --no-ri --no-rdoc;
       brew update;
       brew tap vapor/homebrew-tap;
-      brew install ctls;
+      brew install vapor/tap/vapor;
     fi
 
 install:
@@ -28,6 +29,8 @@ install:
     fi
 
 script:
+  - set -o pipefail
+
   - swift -version
 
   - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
@@ -35,6 +38,21 @@ script:
     fi
 
   - swift build
-  - rm -rf .build && rm -rf Packages
+  - swift package clean
+
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      swift package generate-xcodeproj;
+      xcodebuild clean test -scheme SwiftyBot-Package -enableCodeCoverage YES | xcpretty;
+    fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      ruby generate_linux_tests.rb;
+      swift test;
+    fi
+  - swift package clean
 
   - swift build -c release
+
+after_success:
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      bash <(curl -s https://codecov.io/bash) -X xcodeplist;
+    fi

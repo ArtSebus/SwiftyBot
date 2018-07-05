@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  UserInfoTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+import Foundation
+@testable import Messenger
 import Vapor
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class UserInfoTests: XCTestCase {
+    internal func testInitUserInfo() {
+        let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+        let container = BasicContainer(config: Config.default(), environment: Environment.testing, services: Services.default(), on: worker)
+        let request = Request(using: container)
+        let userInfo = UserInfo(id: "1366898573", on: request)
+        
+        XCTAssertEqual(userInfo?.id, "1366898573")
+        XCTAssertEqual(userInfo?.firstName, "Fabrizio")
+    }
+}

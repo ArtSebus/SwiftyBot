@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  GreetingTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Messenger
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class GreetingTests: XCTestCase {
+    internal func testInit() {
+        let greeting = Greeting(greeting: [LocalizedGreeting(locale: .default, text: "Test")])
+        
+        XCTAssertEqual(greeting.greeting, [LocalizedGreeting(locale: .default, text: "Test")])
+    }
+    
+    internal func testDecode() {
+        let json = "[{\"locale\":\"it_IT\",\"text\":\"Test\"}]".data(using: .utf8) ?? Data()
+        
+        let decoded = try? JSONDecoder().decode(Greeting.self, from: json)
+        
+        XCTAssertEqual(decoded, Greeting(greeting: [LocalizedGreeting(locale: .italian, text: "Test")]))
+    }
+    
+    internal func testEncode() {
+        let greeting = Greeting(greeting: [LocalizedGreeting(locale: .default, text: "Test")])
+        let encoded = try? JSONEncoder().encode(greeting)
+        
+        XCTAssertEqual(encoded, "[{\"locale\":\"default\",\"text\":\"Test\"}]".data(using: .utf8))
+    }
+}

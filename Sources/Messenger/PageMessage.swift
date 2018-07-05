@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  PageMessage.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger page message.
+public struct PageMessage: Codable {
+    /// User message.
+    public private(set) var message: Message?
+    /// Message postback.
+    public private(set) var postback: Postback?
+    /// Message sender.
+    public private(set) var sender: Sender
+}

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Routes.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
+import Foundation
 import Vapor
 
-/// Run the App.
-try app(.detect()).run()
+/// Move this to Response.swift.
+
+/// Registering Facebook Messenger routes.
+public func routes(_ router: Router) throws {
+    /// Setting up the POST request with Telegram secret key.
+    /// With a secret path to be sure that nobody else knows that URL.
+    /// https://core.telegram.org/bots/api#setwebhook
+    router.post("telegram", telegramSecret) { request -> HTTPResponse in
+        return try Response().response(request)
+    }
+}

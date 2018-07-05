@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Language.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Language enum.
+public enum Language: String, Codable {
+    /// Default language, usually english.
+    case `default`
+    /// Italian language.
+    case italian = "it_IT"
+}

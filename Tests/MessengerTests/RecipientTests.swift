@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  RecipientTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Messenger
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class RecipientTests: XCTestCase {
+    internal func testInitRecipient() {
+        let recipient = Recipient(id: "Test")
+        
+        XCTAssertEqual(recipient.id, "Test")
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Payload.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger message payload.
+public struct Payload: Codable, Equatable {
+    /// Payload template.
+    public enum TemplateType: String, Codable, Equatable {
+        /// Generic template.
+        case generic
+    }
+    
+    /// Payload template type.
+    public private(set) var templateType: TemplateType
+    /// Payload elements.
+    public private(set) var elements: [Element]
+    
+    /// Coding keys, used by Codable protocol.
+    private enum CodingKeys: String, CodingKey {
+        case templateType = "template_type"
+        case elements
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  GetStarted.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Get Started helper.
+public struct GetStarted: Codable {
+    /// Default Get Started payload.
+    public static let defaultPayload = "Get Started"
+    /// Get Started payload.
+    public private(set) var payload: String
+    
+    /// Creates a GetStarted.
+    ///
+    /// - Parameter payload: Payload to be sent when the Get Started button is pressed.
+    public init(payload: String) {
+        self.payload = payload
+    }
+}

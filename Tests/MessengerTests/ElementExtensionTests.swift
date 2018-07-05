@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  ExampleElementTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Messenger
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class ElementExtensionTests: XCTestCase {
+    internal func testInitElementExtension() {
+        let element = Element(exampleTitle: "Test", subtitle: "Test Subtitle", itemURL: "Test URL", imageURL: "Test Image URL")
+        
+        XCTAssertEqual(element.title, "Test")
+        XCTAssertEqual(element.subtitle, "Test Subtitle")
+        XCTAssertEqual(element.itemURL, "Test URL")
+        XCTAssertEqual(element.imageURL, "Test Image URL")
+    }
+    
+    internal func testAllExamples() {
+        let allExamples = Element.allExamples
+        
+        XCTAssertTrue(allExamples.contains(Element.queuer))
+        XCTAssertTrue(allExamples.contains(Element.bfkitSwift))
+        XCTAssertTrue(allExamples.contains(Element.bfkit))
+        XCTAssertTrue(allExamples.contains(Element.swiftyBot))
+    }
+}

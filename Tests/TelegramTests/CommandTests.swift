@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  CommandTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,37 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Telegram
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class CommandTests: XCTestCase {
+    internal func testInitCommandWithParameter() {
+        let command = Command("/test test")
+        
+        XCTAssertEqual(command?.command, "test")
+        XCTAssertEqual(command?.parameters, "test")
+    }
+    
+    internal func testInitCommandWithoutParameter() {
+        let command = Command("/test")
+        
+        XCTAssertEqual(command?.command, "test")
+        XCTAssertEqual(command?.parameters, "")
+    }
+    
+    internal func testInitCommandWithDoubleSlash() {
+        let command = Command("/test /test test")
+        
+        XCTAssertEqual(command?.command, "test")
+        XCTAssertEqual(command?.parameters, "/test test")
+    }
+    
+    internal func testInitNilCommand() {
+        let command = Command("")
+        let command2 = Command("test test")
+        
+        XCTAssertNil(command)
+        XCTAssertNil(command2)
+    }
+}

@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Recipient.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Messenger recipient.
+public struct Recipient: Codable {
+    /// Recipient ID.
+    public private(set) var id: String
+    
+    /// Initialize a Recipient.
+    ///
+    /// - Parameter id: Recipient ID.
+    public init(id: String) {
+        self.id = id
+    }
+}

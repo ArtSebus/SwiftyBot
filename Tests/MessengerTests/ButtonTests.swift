@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  ButtonTests.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
+@testable import Messenger
+import XCTest
 
-/// Run the App.
-try app(.detect()).run()
+internal class ButtonTests: XCTestCase {
+    internal func testInitWebURL() {
+        let button = Button(title: "Test", payload: "Test Payload")
+        
+        XCTAssertEqual(button.title, "Test")
+        XCTAssertEqual(button.payload, "Test Payload")
+        XCTAssertNil(button.url)
+    }
+    
+    internal func testInitPostback() {
+        let button = Button(title: "Test", url: "Test URL")
+        
+        XCTAssertEqual(button.title, "Test")
+        XCTAssertEqual(button.url, "Test URL")
+        XCTAssertNil(button.payload)
+    }
+}

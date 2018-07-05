@@ -29,14 +29,36 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftyBot",
-    products: [
-        .executable(name: "SwiftyBot", targets: ["SwiftyBot"])
-    ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "2.4.0")),
+        .package(url: "https://github.com/vapor/vapor.git", .upToNextMinor(from: "3.0.0")),
         .package(url: "https://github.com/FabrizioBrancati/BFKit-Swift.git", .upToNextMinor(from: "3.1.0"))
     ],
     targets: [
-        .target(name: "SwiftyBot", dependencies: ["Vapor", "BFKit"])
+        .target(name: "SwiftyBot", dependencies: ["Bot"]),
+        .target(name: "Bot", dependencies: [
+            "Vapor",
+            "Telegram",
+            "Messenger"
+        ]),
+        .target(name: "Telegram", dependencies: [
+            "Vapor",
+            "BFKit",
+            "Helpers"
+        ]),
+        .target(name: "Messenger", dependencies: [
+            "Vapor",
+            "BFKit",
+            "Helpers"
+        ]),
+        .target(name: "Helpers"),
+        .testTarget(name: "BotTests", dependencies: [
+            "Bot",
+            "Vapor",
+            "Telegram",
+            "Messenger"
+        ]),
+        .testTarget(name: "TelegramTests", dependencies: ["Telegram"]),
+        .testTarget(name: "MessengerTests", dependencies: ["Messenger"]),
+        .testTarget(name: "HelpersTests", dependencies: ["Helpers"])
     ]
 )

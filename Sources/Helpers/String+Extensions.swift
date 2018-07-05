@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  String+Extensions.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Detector String extension.
+public extension String {
+    /// Detect if the message has greetings.
+    ///
+    /// - Returns: Returns true if the message has greetings, otherwise false.
+    public func hasGreetings() -> Bool {
+        let message = lowercased()
+        
+        return message.starts(with: "hi")
+            || message.contains("hello")
+            || message.contains("hey")
+            || message.contains("hei")
+            || message.contains("ciao")
+    }
+}

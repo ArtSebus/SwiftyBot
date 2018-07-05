@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  Command.swift
 //  SwiftyBot
 //
 //  The MIT License (MIT)
@@ -24,8 +24,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Bot
-import Vapor
+import BFKit
+import Foundation
 
-/// Run the App.
-try app(.detect()).run()
+/// Telegram command.
+public struct Command {
+    /// Command.
+    public private(set) var command: String
+    /// Command parameters.
+    public private(set) var parameters: String
+    
+    /// Initialize a command.
+    ///
+    /// - Parameters:
+    ///   - command: Command to be created.
+    ///   - text: User sent message text.
+    public init?(_ text: String) {
+        /// Check if it starts with a `/`, otherwise it isn't a command.
+        guard text.starts(with: "/"), !text.isEmpty else {
+            return nil
+        }
+
+        /// Separate the command from the rest of the text.
+        let spaceIndex = text.index(of: " ")
+        
+        /// Assign command form text.
+        self.command = spaceIndex != -1 ? text.substring(to: spaceIndex) : text
+        /// Clear the command by removing `/`.
+        self.command = self.command.replacingOccurrences(of: "/", with: "")
+        /// Assign parameters form text, if they exist.
+        self.parameters = spaceIndex != -1 ? text.substring(from: spaceIndex + 1) : ""
+    }
+}
